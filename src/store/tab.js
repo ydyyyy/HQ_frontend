@@ -68,15 +68,53 @@ export default {
           url: "Home.vue",
         },
         {
-          path: "/course",
-          name: "course",
+          path: "/courseOfExe",
+          name: "courseOfExe",
           label: "课程管理",
           icon: "video-play",
-          url: "Course.vue",
+          url: "CourseOfExe.vue",
+        },
+        {
+          path: "/student",
+          name: "student",
+          label: "学生管理",
+          icon: "collection",
+          url: "Student.vue",
+        },
+        {
+          path: "/teacher",
+          name: "teacher",
+          label: "讲师管理",
+          icon: "notebook-2",
+          url: "Teacher.vue",
+        },
+        {
+          path: "/enrollManage",
+          name: "enrollManage",
+          label: "报名管理",
+          icon: "message-solid",
+          url: "EnrollManage.vue",
         },
       ],
       company: [
         // 软件公司
+        {
+          path: "/home",
+          name: "home",
+          label: "首页",
+          icon: "s-home",
+          url: "Home.vue",
+        },
+        {
+          path: "/submitApplication",
+          name: "submitApplication",
+          label: "提交申请",
+          icon: "s-promotion",
+          url: "SubmitApplication.vue",
+        },
+      ],
+      student: [
+        // 学员
         {
           path: "/home",
           name: "home",

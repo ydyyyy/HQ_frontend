@@ -24,11 +24,13 @@ export default {
     return {
       allCards:[
         { title: "课程管理", description: "课程管理说明", icon: "📚", color: "#ff8c00", link: "/course", menuId: "menu-course"},
+        { title: "课程管理", description: "课程管理说明", icon: "📚", color: "#ff8c00", link: "/courseOfExe", menuId: "menu-courseOfExe"},
         { title: "报表管理", description: "报表管理说明", icon: "📊", color: "#ff69b4", link: "/report", menuId: "menu-report"},
         { title: "学生管理", description: "学生管理说明", icon: "🎓", color: "#32cd32", link: "/student", menuId: "menu-student"},
         { title: "执行人管理", description: "执行人管理说明", icon: "📝", color: "#ffc800", link: "/executor", menuId: "menu-executor"},
         { title: "讲师管理", description: "讲师管理说明", icon: "👨‍🏫", color: "#ff5500", link: "/teacher", menuId: "menu-teacher"},
         { title: "申请管理", description: "申请管理说明", icon: "📋", color: "#00c3ff", link: "/application", menuId: "menu-application"},
+        { title: "报名管理", description: "报名管理说明", icon: "📋", color: "#00c3ff", link: "/enrollManage", menuId: "menu-enrollManage"},
         { title: "提交申请", description: "提交申请说明", icon: "📑", color: "#00c3ff", link: "/submitApplication", menuId: "menu-submitApplication"}
       ],
       cards: []

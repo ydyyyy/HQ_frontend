@@ -1,7 +1,7 @@
 <template>
   <div class="manage">
     <el-dialog
-      title="提示"
+      title="学员信息"
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose"
@@ -17,30 +17,33 @@
         <el-form-item label="姓名" prop="name">
           <el-input placeholder="请输入姓名" v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="年龄" prop="age">
-          <el-input
-            placeholder="请输入年龄 "
-            prop="age"
-            v-model="form.age"
-          ></el-input>
-        </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-select v-model="form.sex" placeholder="请选择">
             <el-option label="男" value="1"></el-option>
             <el-option label="女" value="0"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="出生日期" prop="birth">
-          <el-date-picker
-            v-model="form.birth"
-            type="date"
-            placeholder="选择日期"
-            value-format="yyyy-MM-DD"
-          >
-          </el-date-picker>
+        <el-form-item label="公司名称" prop="company">
+          <el-input placeholder="请输入公司名称" v-model="form.company"></el-input>
         </el-form-item>
-        <el-form-item label="地址" prop="addr">
-          <el-input placeholder="请输入地址" v-model="form.addr"></el-input>
+        <el-form-item label="工作岗位" prop="position">
+            <el-select v-model="form.position" placeholder="请选择工作岗位">
+              <el-option label="软件工程师" value="软件工程师"></el-option>
+              <el-option label="数据分析师" value="数据分析师"></el-option>
+              <el-option label="质量保证工程师" value="质量保证工程师"></el-option>
+              <el-option label="产品经理" value="产品经理"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="技术水平" prop="level">
+            <el-select v-model="form.level" placeholder="请选择技术水平">
+              <el-option label="萌新" value="萌新"></el-option>
+              <el-option label="小成" value="小成"></el-option>
+              <el-option label="高手" value="高手"></el-option>
+              <el-option label="神" value="神"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="Email" prop="email">
+          <el-input placeholder="请输入Email" v-model="form.email"></el-input>
         </el-form-item>
       </el-form>
 
@@ -50,24 +53,35 @@
       </span>
     </el-dialog>
     <div class="manage-header">
-      <el-button @click="handleAdd" type="primary"> + 新增 </el-button>
+      <el-select v-model="value" placeholder="课程筛选">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <!-- form搜索区域 -->
       <el-form :inline="true" :model="userForm">
         <el-form-item>
-          <el-input placeholder="请输入名称" v-model="userForm.name"></el-input>
+          <el-input placeholder="请输入筛选信息" v-model="userForm.name"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
+        <el-form-item>
+            <el-button type="primary" icon="el-icon-refresh" @click="refresh">刷新</el-button>
+          </el-form-item>
       </el-form>
     </div>
     <div class="common-table">
       <el-table :data="tableData" style="width: 100%" height="90%" stripe>
         <el-table-column prop="name" label="姓名"> </el-table-column>
         <el-table-column prop="sex" label="性别"> </el-table-column>
-        <el-table-column prop="age" label="年龄"> </el-table-column>
-        <el-table-column prop="birth" label="出生日期"> </el-table-column>
-        <el-table-column prop="addr" label="地址"></el-table-column>
+        <el-table-column prop="company" label="公司名称"> </el-table-column>
+        <el-table-column prop="position" label="工作岗位"> </el-table-column>
+        <el-table-column prop="level" label="技术水平"></el-table-column>
+        <el-table-column prop="email" label="Email"></el-table-column>
         <el-table-column prop="control" label="操作">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row)"
@@ -94,27 +108,45 @@
   </div>
 </template>
 <script>
-import { getUser, addUser, editUser, delUser } from "../api";
+import { getUser, editUser, delUser } from "../api";
 export default {
   data() {
     return {
+      options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value: '',
       dialogVisible: false,
       form: {
         name: "",
-        age: "",
         sex: "",
-        birth: "",
-        addr: "",
+        company: "",
+        position: "",
+        level: "",
+        email: "",
       },
       rules: {
         name: [{ required: true, message: "请输入姓名" }],
-        age: [{ required: true, message: "请输入年龄" }],
         sex: [{ required: true, message: "请选择性别" }],
-        birth: [{ required: true, message: "请选择出生日期" }],
-        addr: [{ required: true, message: "请输入地址" }],
+        company: [{ required: true, message: "请输入公司名称" }],
+        position: [{ required: true, message: "请选择工作岗位" }],
+        level: [{ required: true, message: "请选择技术水平" }],
+        email: [{ required: true, message: "请输入Email" }],
       },
       tableData: [],
-      modalType: 0, //0表示新增的弹窗，1表示编辑
       total: 0, // 当前总条数
       pageData: {
         page: 1,
@@ -130,19 +162,11 @@ export default {
     submit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          // 后续对表单数据的处理
-          if (this.modalType === 0) {
-            addUser(this.form).then(() => {
-              //重新获取列表的接口
-              this.getList();
-            });
-          } else {
-            editUser(this.form).then(() => {
-              //重新获取列表的接口
-              this.getList();
-            });
-          }
-          // 清空表单的数据
+          console.log(this.form);
+          editUser(this.form).then(() => {
+            //重新获取列表的接口
+            this.getList();
+          });
           this.$refs.form.resetFields();
           // 关闭弹窗
           this.dialogVisible = false;
@@ -152,18 +176,18 @@ export default {
     // 弹窗关闭时
     handleClose() {
       this.$refs.form.resetFields();
+      this.dialogVisible = false;
     },
     cancel() {
       this.handleClose();
     },
     handleEdit(row) {
-      this.modalType = 1;
       this.dialogVisible = true;
       // 注意需要对当前行数据进行深拷贝，否则会出错
       this.form = JSON.parse(JSON.stringify(row));
     },
     handleDelete(row) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该学员, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -185,11 +209,6 @@ export default {
           });
         });
     },
-    handleAdd() {
-      this.modalType = 0;
-      this.dialogVisible = true;
-      console.log(modalType);
-    },
     getList() {
       // 获取的列表的数据
       getUser({ params: { ...this.userForm, ...this.pageData } }).then(
@@ -202,6 +221,10 @@ export default {
         }
       );
     },
+    refresh() {
+      this.userForm.name = "";
+      this.getList();
+      },
     // 选择页码的回调函数
     handlePage(val) {
       this.pageData.page = val;

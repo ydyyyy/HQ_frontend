@@ -24,10 +24,11 @@ for (let i = 0; i < count; i++) {
     Mock.mock({
       id: Mock.Random.guid(),
       name: Mock.Random.cname(),
-      addr: Mock.mock('@county(true)'),
-      'age|18-60': 1,
-      birth: Mock.Random.date(),
-      sex: Mock.Random.integer(0, 1)
+      sex: Mock.Random.integer(0, 1),
+      company: Mock.Random.pick(['A公司', 'B公司', 'C公司', 'D公司', 'E公司']),
+      position: Mock.Random.pick(['软件工程师', '数据分析师', '质量保证工程师', '产品经理']),
+      level: Mock.Random.pick(['萌新', '小成', '高手', '神']),
+      email: Mock.Random.email(),
     })
   )
 }
@@ -44,7 +45,7 @@ export default {
     const { name, page = 1, limit = 20 } = param2Obj(config.url)
     console.log('name:' + name, 'page:' + page, '分页大小limit:' + limit)
     const mockList = List.filter(user => {
-      if (name && user.name.indexOf(name) === -1 && user.addr.indexOf(name) === -1) return false
+      if (name && user.name.indexOf(name) === -1 && user.company.indexOf(name) === -1 && user.position.indexOf(name) === -1 && user.level.indexOf(name) === -1) return false
       return true
     })
     const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
@@ -59,24 +60,6 @@ export default {
    * @param name, addr, age, birth, sex
    * @return {{code: number, data: {message: string}}}
    */
-  createUser: config => {
-    const { name, addr, age, birth, sex } = JSON.parse(config.body)
-    console.log(JSON.parse(config.body))
-    List.unshift({
-      id: Mock.Random.guid(),
-      name: name,
-      addr: addr,
-      age: age,
-      birth: birth,
-      sex: sex
-    })
-    return {
-      code: 20000,
-      data: {
-        message: '添加成功'
-      }
-    }
-  },
   /**
    * 删除用户
    * @param id
@@ -120,15 +103,14 @@ export default {
    * @return {{code: number, data: {message: string}}}
    */
   updateUser: config => {
-    const { id, name, addr, age, birth, sex } = JSON.parse(config.body)
+    const { name, sex, company, position, level, email } = JSON.parse(config.body)
     const sex_num = parseInt(sex)
     List.some(u => {
-      if (u.id === id) {
-        u.name = name
-        u.addr = addr
-        u.age = age
-        u.birth = birth
-        u.sex = sex_num
+      if (u.name === name) {
+        u.company = company
+        u.position = position
+        u.email = email
+        u.level = level
         return true
       }
     })
