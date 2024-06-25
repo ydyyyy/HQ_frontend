@@ -57,6 +57,13 @@ export default {
           icon: "data-analysis",
           url: "Report.vue",
         },
+        {
+          path: "/courseAnn",
+          name: "courseAnn",
+          label: "课程公告",
+          icon: "postcard",
+          url: "CourseAnn.vue",
+        }
       ],
       executor: [
         // 执行者
@@ -95,6 +102,20 @@ export default {
           icon: "message-solid",
           url: "EnrollManage.vue",
         },
+        {
+          path: "/courseInfo",
+          name: "courseInfo",
+          label: "发布通知",
+          icon: "s-promotion",
+          url: "CourseInfo.vue",
+        },
+        {
+          path: "/courseAnn",
+          name: "courseAnn",
+          label: "课程公告",
+          icon: "postcard",
+          url: "CourseAnn.vue",
+        }
       ],
       company: [
         // 软件公司
@@ -112,6 +133,13 @@ export default {
           icon: "s-promotion",
           url: "SubmitApplication.vue",
         },
+        {
+          path: "/courseAnn",
+          name: "courseAnn",
+          label: "课程公告",
+          icon: "postcard",
+          url: "CourseAnn.vue",
+        }
       ],
       student: [
         // 学员
@@ -123,11 +151,18 @@ export default {
           url: "Home.vue",
         },
         {
-          path: "/submitApplication",
-          name: "submitApplication",
-          label: "提交申请",
-          icon: "s-promotion",
-          url: "SubmitApplication.vue",
+          path: "/courseAnn",
+          name: "courseAnn",
+          label: "课程公告",
+          icon: "postcard",
+          url: "CourseAnn.vue",
+        },
+        {
+          path: "/courseOfStu",
+          name: "courseOfStu",
+          label: "课程管理",
+          icon: "video-play",
+          url: "CourseOfStu.vue",
         },
       ],
     },
