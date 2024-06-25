@@ -36,6 +36,14 @@ export default {
             message: '获取成功'
           }
         }
+      } else if (username === 'worker' && password === 'worker' && role === 'staff') {
+        return {
+          code: 20000,
+          data: {
+            token: Mock.Random.guid(),
+            message: '获取成功'
+          }
+        }
       } else {
       return {
         code: -999,

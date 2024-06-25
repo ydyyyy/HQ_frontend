@@ -165,6 +165,30 @@ export default {
           url: "CourseOfStu.vue",
         },
       ],
+      staff: [
+        // 现场工作人员
+        {
+          path: "/home",
+          name: "home",
+          label: "首页",
+          icon: "s-home",
+          url: "Home.vue",
+        },
+        {
+          path: "/courseAnn",
+          name: "courseAnn",
+          label: "课程公告",
+          icon: "postcard",
+          url: "CourseAnn.vue",
+        },
+        {
+          path: "/signIn",
+          name: "signIn",
+          label: "签到管理",
+          icon: "s-check",
+          url: "SignIn.vue",
+        },
+      ],
     },
   },
   mutations: {

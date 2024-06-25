@@ -35,7 +35,8 @@ export default {
         { title: "报名管理", description: "报名管理说明", icon: "📋", color: "#00c3ff", link: "/enrollManage", menuId: "menu-enrollManage"},
         { title: "提交申请", description: "提交申请说明", icon: "📑", color: "#00c3ff", link: "/submitApplication", menuId: "menu-submitApplication"},
         { title: "发布通知", description: "发布培训通知说明", icon: "🔔", color: "#ff69b4", link: "/courseInfo", menuId: "menu-courseInfo"},
-        { title: "课程公告", description: "课程公告说明", icon: "📢", color: "#ffc800", link: "/courseAnn", menuId: "menu-courseAnn"}
+        { title: "课程公告", description: "课程公告说明", icon: "📢", color: "#ffc800", link: "/courseAnn", menuId: "menu-courseAnn"},
+        { title: "签到管理", description: "签到管理说明", icon: "📋", color: "#32cd32", link: "/signIn", menuId: "menu-signIn"}
       ],
       cards: []
     };
