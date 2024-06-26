@@ -1,7 +1,7 @@
 <template>
     <div class="manage">
       <el-dialog
-      title="新建课程"
+      title="课程信息"
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose"
@@ -35,7 +35,7 @@
             v-model="form.plan"
           ></el-input>
         </el-form-item>
-
+        
         <!-- 讲师资料 -->
         <el-divider>讲师资料</el-divider>
         <el-form-item label="姓名" prop="instructorName" class="full-width">
@@ -54,8 +54,8 @@
           <el-input placeholder="请输入电话" v-model="form.instructorPhone"></el-input>
         </el-form-item>
 
-         <!-- 执行人负责内容 -->
-         <el-divider>执行人负责内容</el-divider>
+        <!-- 执行人负责内容 -->
+        <el-divider>执行人负责内容</el-divider>
         <el-form-item label="培训内容" prop="trainingContent" class="large-width">
           <el-input
             type="textarea"
@@ -65,17 +65,9 @@
             v-model="form.trainingContent"
           ></el-input>
         </el-form-item>
-        <el-form-item label="开始时间" prop="trainingStartTime" class="full-width">
+        <el-form-item label="培训时间" prop="trainingTime" class="full-width">
           <el-date-picker
-            v-model="form.trainingStartTime"
-            type="datetime"
-            placeholder="选择日期和时间"
-            style="width: 525px;"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="结束时间" prop="trainingEndTime" class="full-width">
-          <el-date-picker
-            v-model="form.trainingEndTime"
+            v-model="form.trainingTime"
             type="datetime"
             placeholder="选择日期和时间"
             style="width: 525px;"
@@ -92,7 +84,6 @@
       </span>
     </el-dialog>
       <div class="manage-header">
-        <el-button @click="handleAdd" type="primary"> + 新建课程 </el-button>
         <!-- form搜索区域 -->
         <el-form :inline="true" :model="userForm">
           <el-form-item>
@@ -124,11 +115,14 @@
               <el-button size="mini" @click="handleEdit(scope.row)"
                 >编辑</el-button
               >
+              <el-button type="success" size="mini" @click="handleStart(scope.row)"
+                >启动</el-button
+              >
               <el-button
                 type="danger"
                 size="mini"
                 @click="handleDelete(scope.row)"
-                >删除</el-button
+                >完成</el-button
               >
             </template>
           </el-table-column>
@@ -162,8 +156,7 @@
           instructorEmail: '',
           instructorPhone: '',
           trainingContent: '',
-          trainingStartTime: '',
-          trainingEndTime: '',
+          trainingTime: '',
           trainingLocation: '',
   
         },
@@ -179,12 +172,10 @@
           instructorEmail: [{ required: true, message: '请输入Email'}],
           instructorPhone: [{ required: true, message: '请输入电话'}],
           trainingContent: [{ required: true, message: '请输入培训内容' }],
-        trainingStartTime: [{ required: true, message: '请选择培训开始时间' }],
-        trainingEndTime: [{ required: true, message: '请选择培训结束时间' }],
+        trainingTime: [{ required: true, message: '请选择培训时间' }],
         trainingLocation: [{ required: true, message: '请输入培训地点' }],
         },
         tableData: [],
-        modalType: 0, //0表示新增的弹窗，1表示编辑
         total: 0, // 当前总条数
         pageData: {
           page: 1,
@@ -219,46 +210,58 @@
           }
         });
       },
-      // 弹窗关闭时
-      handleClose() {
-        this.$refs.form.resetFields();
-        this.dialogVisible = false;
-      },
-      cancel() {
-        this.handleClose();
-      },
       handleEdit(row) {
-        this.modalType = 1;
         this.dialogVisible = true;
         // 注意需要对当前行数据进行深拷贝，否则会出错
         this.form = JSON.parse(JSON.stringify(row));
       },
-      handleDelete(row) {
-        this.$confirm("此操作将永久删除该课程, 是否继续?", "提示", {
+      handleStart(row) {
+        if(row.status === '已结束') {
+          this.$message.error('该课程已结束，无法启动')
+          return;
+        }
+        if(row.status === '进行中') {
+          this.$message.error('该课程已在进行中')
+          return;
+        }
+        this.$confirm("此操作将启动该课程, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning",
         })
           .then(() => {
-            delCourse({ id: row.id }).then(() => {
-              this.$message({
-                type: "success",
-                message: "删除成功!",
-              });
-              // 重新获取列表的接口
-              this.getList();
-            });
+            row.status = '已启动';
           })
           .catch(() => {
             this.$message({
               type: "info",
-              message: "已取消删除",
+              message: "已取消该操作",
             });
           });
       },
-      handleAdd() {
-        this.modalType = 0;
-        this.dialogVisible = true;
+      handleDelete(row) {
+        if(row.status === '已结束') {
+          this.$message.error('该课程已结束，无法再次完成')
+          return;
+        }
+        if(row.status === '未开始') {
+          this.$message.error('该课程未开始，无法完成')
+          return;
+        }
+        this.$confirm("此操作将设置该课程为已完成状态, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(() => {
+            row.status = '已结束';
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消该操作",
+            });
+          });
       },
       getList() {
         // 获取的列表的数据
