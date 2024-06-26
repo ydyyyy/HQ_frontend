@@ -72,6 +72,7 @@ export default {
               // 获取菜单的数据，存入store中
               this.$store.commit('setMenu',this.form.role)
               this.$store.commit('addMenu', this.$router)
+              this.$store.commit('setRole',this.form.role)
               // 跳转到首页
               this.$router.push("/home");
             } else {

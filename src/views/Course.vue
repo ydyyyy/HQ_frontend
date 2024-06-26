@@ -178,10 +178,10 @@
           instructorField: [{ required: true, message: '请输入擅长领域'}],
           instructorEmail: [{ required: true, message: '请输入Email'}],
           instructorPhone: [{ required: true, message: '请输入电话'}],
-          trainingContent: [{ required: true, message: '请输入培训内容' }],
-        trainingStartTime: [{ required: true, message: '请选择培训开始时间' }],
-        trainingEndTime: [{ required: true, message: '请选择培训结束时间' }],
-        trainingLocation: [{ required: true, message: '请输入培训地点' }],
+          trainingContent: [{ required: false, message: '请输入培训内容' }],
+        trainingStartTime: [{ required: false, message: '请选择培训开始时间' }],
+        trainingEndTime: [{ required: false, message: '请选择培训结束时间' }],
+        trainingLocation: [{ required: false, message: '请输入培训地点' }],
         },
         tableData: [],
         modalType: 0, //0表示新增的弹窗，1表示编辑
@@ -204,6 +204,7 @@
             if (this.modalType === 0) {
               addCourse(this.form).then(() => {
                 //重新获取列表的接口
+                console.log(this.form, 'form');
                 this.getList();
               });
             } else {
@@ -231,7 +232,7 @@
         this.modalType = 1;
         this.dialogVisible = true;
         // 注意需要对当前行数据进行深拷贝，否则会出错
-        this.form = JSON.parse(JSON.stringify(row));
+        this.form = this.tableData.find((item) => item.id === row.id);
       },
       handleDelete(row) {
         this.$confirm("此操作将永久删除该课程, 是否继续?", "提示", {

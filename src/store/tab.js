@@ -4,6 +4,7 @@ export default {
   state: {
     isCollapse: false, // 控制菜单的展开和收起
     activePath: "首页", // 当前激活的tab
+    role: "", // 角色
     menu: [],
     permissions: {
       // 权限数据
@@ -63,7 +64,7 @@ export default {
           label: "课程公告",
           icon: "postcard",
           url: "CourseAnn.vue",
-        }
+        },
       ],
       executor: [
         // 执行者
@@ -115,7 +116,7 @@ export default {
           label: "课程公告",
           icon: "postcard",
           url: "CourseAnn.vue",
-        }
+        },
       ],
       company: [
         // 软件公司
@@ -181,6 +182,13 @@ export default {
           icon: "s-check",
           url: "SignIn.vue",
         },
+        {
+          path: "/courseSurvey",
+          name: "courseSurvey",
+          label: "培训调查",
+          icon: "s-marketing",
+          url: "CourseSurvey.vue",
+        },
       ],
     },
   },
@@ -198,6 +206,9 @@ export default {
     setMenu(state, val) {
       state.menu = state.permissions[val];
       Cookie.set("menu", JSON.stringify(state.permissions[val]));
+    },
+    setRole(state, val) {
+      state.role = val;
     },
     // 动态注册路由
     addMenu(state, router) {

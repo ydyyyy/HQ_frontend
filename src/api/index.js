@@ -10,9 +10,11 @@ export const getData = () => {
 export const getUser = (params) => {
   return http.get("/user/getUser", params);
 };
-export const getCourse = (params) => {
-  return http.get("/course/getCourse", params);
-};
+
+                                                  export const getCourse = (params) => {
+                                                    return http.get("/course/getCourse", params);
+                                                  };
+
 export const getTeacher = (params) => {
   return http.get("/teacher/getTeacher", params);
 };
@@ -24,9 +26,9 @@ export const getExecutor = (params) => {
 export const addUser = (data) => {
   return http.post("/user/add", data);
 };
-export const addCourse = (data) => {
-  return http.post("/course/add", data);
-};
+                                                  export const addCourse = (data) => {
+                                                    return http.post("/course/add", data);
+                                                  };
 export const addTeacher = (data) => {
   return http.post("/teacher/add", data);
 };
@@ -38,9 +40,9 @@ export const addExecutor = (data) => {
 export const editUser = (data) => {
   return http.post("/user/edit", data);
 };
-export const editCourse = (data) => {
-  return http.post("/course/edit", data);
-};
+                                                  export const editCourse = (data) => {
+                                                    return http.post("/course/edit", data);
+                                                  };
 export const editTeacher = (data) => {
   return http.post("/teacher/edit", data);
 };
@@ -63,6 +65,6 @@ export const delExecutor = (data) => {
   return http.post("/executor/del", data);
 };
 
-export const getMenu = (data) => {
-  return http.post("/permission/getMenu", data);
-};
+                                              export const getMenu = (data) => {
+                                                return http.post("/permission/getMenu", data);
+                                              };

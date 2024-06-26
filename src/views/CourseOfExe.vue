@@ -1,7 +1,7 @@
 <template>
     <div class="manage">
       <el-dialog
-      title="课程信息"
+      title="新建课程"
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose"
@@ -35,7 +35,7 @@
             v-model="form.plan"
           ></el-input>
         </el-form-item>
-        
+
         <!-- 讲师资料 -->
         <el-divider>讲师资料</el-divider>
         <el-form-item label="姓名" prop="instructorName" class="full-width">
@@ -54,8 +54,8 @@
           <el-input placeholder="请输入电话" v-model="form.instructorPhone"></el-input>
         </el-form-item>
 
-        <!-- 执行人负责内容 -->
-        <el-divider>执行人负责内容</el-divider>
+         <!-- 执行人负责内容 -->
+         <el-divider>执行人负责内容</el-divider>
         <el-form-item label="培训内容" prop="trainingContent" class="large-width">
           <el-input
             type="textarea"
@@ -65,9 +65,17 @@
             v-model="form.trainingContent"
           ></el-input>
         </el-form-item>
-        <el-form-item label="培训时间" prop="trainingTime" class="full-width">
+        <el-form-item label="开始时间" prop="trainingStartTime" class="full-width">
           <el-date-picker
-            v-model="form.trainingTime"
+            v-model="form.trainingStartTime"
+            type="datetime"
+            placeholder="选择日期和时间"
+            style="width: 525px;"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="结束时间" prop="trainingEndTime" class="full-width">
+          <el-date-picker
+            v-model="form.trainingEndTime"
             type="datetime"
             placeholder="选择日期和时间"
             style="width: 525px;"
@@ -156,7 +164,8 @@
           instructorEmail: '',
           instructorPhone: '',
           trainingContent: '',
-          trainingTime: '',
+          trainingStartTime: '',
+          trainingEndTime: '',
           trainingLocation: '',
   
         },
@@ -172,7 +181,8 @@
           instructorEmail: [{ required: true, message: '请输入Email'}],
           instructorPhone: [{ required: true, message: '请输入电话'}],
           trainingContent: [{ required: true, message: '请输入培训内容' }],
-        trainingTime: [{ required: true, message: '请选择培训时间' }],
+        trainingStartTime: [{ required: true, message: '请选择培训开始时间' }],
+        trainingEndTime: [{ required: true, message: '请选择培训结束时间' }],
         trainingLocation: [{ required: true, message: '请输入培训地点' }],
         },
         tableData: [],
@@ -265,13 +275,14 @@
       },
       getList() {
         // 获取的列表的数据
+        console.log(this.$store.state.tab.role,"当前角色");
         getCourse({ params: { ...this.userForm, ...this.pageData } }).then(
           ({ data }) => {
             this.tableData = data.list;
             this.total = data.count || 0;
           }
         );
-      },
+     },
       refresh() {
       this.userForm.name = "";
       this.getList();

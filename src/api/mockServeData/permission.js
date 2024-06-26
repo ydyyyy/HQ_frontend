@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 export default {
   getMenu: config => {
-    console.log(config)
+    console.log(config,"登录")
     const { username, password, role} = JSON.parse(config.body)
     // 先判断用户是否存在
     // 判断账号和密码是否对应
