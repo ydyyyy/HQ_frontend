@@ -1,5 +1,5 @@
-import Executor from '@/views/Executor.vue'
 import Mock from 'mockjs'
+import { courseStatus } from '../../utils/dataType'
 
 // get请求从config.url获取参数，post从config.body中获取参数
 function param2Obj (url) {
@@ -23,11 +23,21 @@ const count = 200
 for (let i = 0; i < count; i++) {
   List.push(
     Mock.mock({
-        id: Mock.Random.guid(), // 课程ID
+        id: i, // 课程ID
         name: Mock.Random.ctitle(5, 10), // 课程名称
         teacher: Mock.Random.cname(), // 讲师
         executor: Mock.Random.cname(), // 执行人
-        status: Mock.Random.pick(['未开始', '进行中', '已结束']), // 课程状态
+        status: courseStatus.UNSTART, // 课程状态
+        cost: 2000,
+        plan: '培训计划内容',
+        teacherTitle: '',
+        teacherField: '',
+        teacherEmail: '',
+        teacherPhone: '',
+        trainingContent: '内容',
+        trainingTime: '时间',
+        trainingLocation: '位置',
+        selected: false
     })
   )
 }
