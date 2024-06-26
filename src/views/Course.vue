@@ -35,7 +35,7 @@
             v-model="form.plan"
           ></el-input>
         </el-form-item>
-        
+
         <!-- 讲师资料 -->
         <el-divider>讲师资料</el-divider>
         <el-form-item label="姓名" prop="instructorName" class="full-width">
@@ -52,6 +52,29 @@
         </el-form-item>
         <el-form-item label="电话" prop="instructorPhone" class="full-width">
           <el-input placeholder="请输入电话" v-model="form.instructorPhone"></el-input>
+        </el-form-item>
+
+         <!-- 执行人负责内容 -->
+         <el-divider>执行人负责内容</el-divider>
+        <el-form-item label="培训内容" prop="trainingContent" class="large-width">
+          <el-input
+            type="textarea"
+            :rows="4"
+            style="width: 525px; height: 100px;"
+            placeholder="请输入培训内容"
+            v-model="form.trainingContent"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="培训时间" prop="trainingTime" class="full-width">
+          <el-date-picker
+            v-model="form.trainingTime"
+            type="datetime"
+            placeholder="选择日期和时间"
+            style="width: 525px;"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="培训地点" prop="trainingLocation" class="full-width">
+          <el-input placeholder="请输入培训地点" v-model="form.trainingLocation"></el-input>
         </el-form-item>
       </el-form>
 
@@ -129,7 +152,10 @@
           instructorTitle: '',
           instructorField: '',
           instructorEmail: '',
-          instructorPhone: ''
+          instructorPhone: '',
+          trainingContent: '',
+          trainingTime: '',
+          trainingLocation: '',
   
         },
         rules: {
@@ -142,7 +168,10 @@
           instructorTitle: [{ required: true, message: '请输入职称'}],
           instructorField: [{ required: true, message: '请输入擅长领域'}],
           instructorEmail: [{ required: true, message: '请输入Email'}],
-          instructorPhone: [{ required: true, message: '请输入电话'}]
+          instructorPhone: [{ required: true, message: '请输入电话'}],
+          trainingContent: [{ required: true, message: '请输入培训内容' }],
+        trainingTime: [{ required: true, message: '请选择培训时间' }],
+        trainingLocation: [{ required: true, message: '请输入培训地点' }],
         },
         tableData: [],
         modalType: 0, //0表示新增的弹窗，1表示编辑

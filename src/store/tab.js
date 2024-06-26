@@ -175,13 +175,6 @@ export default {
           url: "Home.vue",
         },
         {
-          path: "/courseAnn",
-          name: "courseAnn",
-          label: "课程公告",
-          icon: "postcard",
-          url: "CourseAnn.vue",
-        },
-        {
           path: "/signIn",
           name: "signIn",
           label: "签到管理",
