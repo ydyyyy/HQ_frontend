@@ -10,7 +10,7 @@ export const getData = () => {
 export const getUser = (params) => {
   return http.get("/user/getUser", params);
 };
-
+                                                  //经理获取课程
                                                   export const getCourse = (params) => {
                                                     return http.get("/course/getCourse", params);
                                                   };
@@ -26,6 +26,7 @@ export const getExecutor = (params) => {
 export const addUser = (data) => {
   return http.post("/user/add", data);
 };
+                                                  //经理添加课程
                                                   export const addCourse = (data) => {
                                                     return http.post("/course/add", data);
                                                   };
@@ -40,6 +41,7 @@ export const addExecutor = (data) => {
 export const editUser = (data) => {
   return http.post("/user/edit", data);
 };
+                                                  //经理编辑课程
                                                   export const editCourse = (data) => {
                                                     return http.post("/course/edit", data);
                                                   };
@@ -55,16 +57,17 @@ export const editExecutor = (data) => {
 export const delUser = (data) => {
   return http.post("/user/del", data);
 };
-export const delCourse = (data) => {
-  return http.post("/course/del", data);
-};
+                                                //经理删除课程
+                                                export const delCourse = (data) => {
+                                                  return http.post("/course/del", data);
+                                                };
 export const delTeacher = (data) => {
   return http.post("/teacher/del", data);
 };
 export const delExecutor = (data) => {
   return http.post("/executor/del", data);
 };
-
+                                              //登录
                                               export const getMenu = (data) => {
                                                 return http.post("/permission/getMenu", data);
                                               };

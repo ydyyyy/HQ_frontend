@@ -102,101 +102,70 @@
       </el-form>
     </el-dialog>
 
-    <!-- 报名表单对话框 -->
-  <el-dialog
-    title="报名信息"
-    :visible.sync="signUpDiagVisible"
-    width="50%"
-    :before-close="handleClose"
-  >
-    <!-- 学生信息 -->
-    <el-form
-      ref="form"
-      :rules="signUpRules"
-      :inline="false"
-      :model="signUpForm"
-      label-width="120px"
+    <!-- 课程缴费对话框 -->
+    <el-dialog
+      title="课程缴费"
+      :visible.sync="paymentDialogVisible"
+      width="50%"
+      :before-close="handleCloseOfPayment"
     >
-      <el-form-item label="学生姓名" prop="name" class="full-width">
-        <el-input
-          placeholder="请填写姓名"
-          v-model="signUpForm.name"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="性别" prop="gender" class="full-width">
-        <el-radio-group v-model="signUpForm.sex">
-          <el-radio label="男">男</el-radio>
-          <el-radio label="女">女</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="年龄" prop="age" class="full-width">
-        <el-input
-          placeholder="请填写年龄"
-          v-model="signUpForm.age"
-          type="number"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="联系电话" prop="phone" class="full-width">
-        <el-input
-          placeholder="请填写联系电话"
-          v-model="signUpForm.phone"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="电子邮箱" prop="email" class="full-width">
-        <el-input
-          placeholder="请填写电子邮箱"
-          v-model="signUpForm.email"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="所属公司名称" prop="company" class="full-width">
-        <el-input
-          placeholder="请填写公司名称"
-          v-model="signUpForm.company"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="工作岗位" prop="position" class="full-width">
-        <el-select v-model="signUpForm.position" placeholder="请选择工作岗位">
-          <el-option label="软件工程师" value="软件工程师"></el-option>
-          <el-option label="数据分析师" value="数据分析师"></el-option>
-          <el-option label="质量保证工程师" value="质量保证工程师"></el-option>
-          <el-option label="产品经理" value="产品经理"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="技术水平" prop="level" class="full-width">
-        <el-select v-model="signUpForm.level" placeholder="请选择技术水平">
-          <el-option label="萌新" value="萌新"></el-option>
-          <el-option label="小成" value="小成"></el-option>
-          <el-option label="高手" value="高手"></el-option>
-          <el-option label="神" value="神"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="申请理由" prop="reason" class="full-width">
-        <el-input
-          type="textarea"
-          placeholder="请填写申请理由"
-          v-model="signUpForm.reason"
-          :rows="4"
-        ></el-input>
-      </el-form-item>
-    </el-form>
+      <el-form
+        ref="paymentForm"
+        :rules="paymentRules"
+        :inline="false"
+        :model="paymentForm"
+        label-width="120px"
+      >
+        <!-- 课程信息 -->
+        <el-divider>课程信息</el-divider>
+        <el-form-item label="课程名称" prop="courseName" class="full-width">
+          <el-input v-model="paymentForm.courseName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="课程费用" prop="courseFee" class="full-width">
+          <el-input v-model="paymentForm.courseFee" disabled></el-input>
+        </el-form-item>
 
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="signUpSubmit">提交</el-button>
-    </span>
-  </el-dialog>
+        <!-- 学员信息 -->
+        <el-divider>学员信息</el-divider>
+        <el-form-item label="学员姓名" prop="studentName" class="full-width">
+          <el-input v-model="paymentForm.studentName" ></el-input>
+        </el-form-item>
+        <el-form-item label="电子邮箱" prop="email" class="full-width">
+          <el-input v-model="paymentForm.email" ></el-input>
+        </el-form-item>
+
+        <!-- 支付方式 -->
+        <el-divider>支付方式</el-divider>
+        <el-radio-group
+          v-model="paymentForm.paymentMethod"
+          @change="openQRCodeDialog"
+          class="centered-radio-group"
+        >
+          <el-radio label="支付宝">支付宝</el-radio>
+          <el-radio label="微信支付">微信支付</el-radio>
+        </el-radio-group>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleCloseOfPayment">取消</el-button>
+        <el-button type="primary" @click="submitPayment">提交</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 支付二维码对话框 -->
+    <el-dialog
+      title="扫描二维码进行支付"
+      :visible.sync="qrcodeDialogVisible"
+      width="30%"
+      :before-close="handleCloseQRCodeDialog"
+    >
+      <div class="qrcode-container">
+        <img v-if="paymentForm.paymentMethod === '支付宝'" src="../assets/images/zhifubao.jpg" alt="支付宝二维码" class="qrcode-image" />
+        <img v-else-if="paymentForm.paymentMethod === '微信支付'" src="../assets/images/weixin.jpg" alt="微信支付二维码" class="qrcode-image" />
+      </div>
+    </el-dialog>
 
     <div class="manage-header">
-      <el-form :inline="true" :model="filter">
-        <el-form-item label="筛选">
-          <el-switch
-            v-model="filter.showSelected"
-            active-text="已选课程"
-            inactive-text="未选课程"
-            @change="handleFilterChange"
-          ></el-switch>
-        </el-form-item>
-      </el-form>
       <el-form :inline="true" :model="userForm">
         <el-form-item>
           <el-input
@@ -217,7 +186,7 @@
 
     <!-- 表格内容 -->
     <div class="common-table">
-      <el-table :data="filteredCourses" style="width: 100%" height="90%" stripe>
+      <el-table :data="courses" style="width: 100%" height="90%" stripe>
         <el-table-column prop="name" label="课程名称"></el-table-column>
         <el-table-column prop="teacher" label="讲师"></el-table-column>
         <el-table-column
@@ -232,26 +201,18 @@
         <el-table-column prop="cost" label="培训费用(￥)"></el-table-column>
         <el-table-column prop="status" label="课程状态">
           <template slot-scope="scope">
-            <el-tag :type="getStatusType(scope.row.status)">
-              {{ scope.row.status }}
+            <el-tag :type="getStatusType(scope.row.statusOfPay)">
+              {{ scope.row.statusOfPay }}
             </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="300">
           <template slot-scope="scope">
             <el-button
-              v-if="!scope.row.selected"
               @click="selectCourse(scope.row)"
               type="primary"
               size="mini"
-              >报名</el-button
-            >
-            <el-button
-              v-else
-              @click="deselectCourse(scope.row)"
-              type="danger"
-              size="mini"
-              >退选</el-button
+              >缴费</el-button
             >
             <el-button @click="viewCourse(scope.row)" type="success" size="mini"
               >查看</el-button
@@ -310,32 +271,22 @@ export default {
         trainingTime: [{ required: false, message: "请选择培训时间" }],
         trainingLocation: [{ required: false, message: "请输入培训地点" }],
       },
-
-      // 报名表单的显示与否
-      signUpDiagVisible: false,
-      // 报名表单的属性
-      signUpForm: {
-        name: "",
-        sex: "",
-        age: "",
-        phone: "",
-        email: "",
-        company: "",
-        position: "",
-        level: "",
-        reason: "",
+      paymentDialogVisible: false,
+      qrcodeDialogVisible: false,
+      paymentQRCode: "",
+      paymentForm: {
+        courseName: "示例课程",
+        courseFee: "1000",
+        studentName: "张三",
+        email: "zhangsan@example.com",
+        paymentMethod: "",
       },
-      // 报名表单的rules
-      signUpRules: {
-        name: [{ required: true, message: "请输入姓名" }],
-        sex: [{ required: true, message: "请选择性别" }],
-        age: [{ required: true, message: "请输入年龄" }],
-        phone: [{ required: true, message: "请输入联系电话" }],
-        email: [{ required: true, message: "请输入Email" }],
-        company: [{ required: true, message: "请输入公司名称" }],
-        position: [{ required: true, message: "请选择工作岗位" }],
-        level: [{ required: true, message: "请选择技术水平" }],
-        reason: [{ required: true, message: "请输入申请理由" }],
+      paymentRules: {
+        courseName: [{ required: true, message: "请输入课程名称" }],
+        courseFee: [{ required: true, message: "请输入课程费用" }],
+        studentName: [{ required: true, message: "请输入学员姓名" }],
+        email: [{ required: true, message: "请输入电子邮箱" }],
+        paymentMethod: [{ required: true, message: "请选择支付方式" }],
       },
       total: 0, // 当前总条数
       pageData: {
@@ -351,29 +302,13 @@ export default {
       courses: [],
     };
   },
-  computed: {
-    filteredCourses() {
-      return this.courses.filter((course) => {
-        return this.filter.showSelected ? course.selected : !course.selected;
-      });
-    },
-  },
   methods: {
-    handleFilterChange() {
-      // TODO: 处理筛选条件变化的逻辑
+    openQRCodeDialog() {
+      this.qrcodeDialogVisible = true;
     },
-
-    // 课程报名
+    // 课程评价
     selectCourse(course) {
-      this.signUpDiagVisible = true;
-      // course.selected = true;
-    },
-
-    // 课程退选
-    deselectCourse(course) {
-      course.selected = false;
-      // TODO: 状态存到数据库中
-      this.$message(`退选成功: ${course.courseName}`);
+      this.paymentDialogVisible = true;
     },
 
     // 查看课程信息
@@ -383,19 +318,25 @@ export default {
       this.form = this.courses.find((item) => item.id === course.id);
     },
 
-    // 提交报名
-    signUpSubmit() {
-      // TODO: 提交报名表单
-      this.signUpDiagVisible = false;
+    // 提交评价
+    submitPayment() {
+      this.$refs.paymentForm.validate((valid) => {
+        if (valid) {
+          // 提交付款信息的逻辑
+          console.log("付款信息:", this.paymentForm);
+          this.handleCloseOfPayment();
+        } else {
+          console.log("表单验证失败");
+          return false;
+        }
+      });
     },
 
     getStatusType(status) {
       switch (status) {
-        case "未开始":
-          return "info";
-        case "进行中":
+        case "已缴费":
           return "success";
-        case "已结束":
+        case "未缴费":
           return "danger";
         default:
           return "";
@@ -406,7 +347,13 @@ export default {
     handleClose() {
       this.$refs.form.resetFields();
       this.dialogVisible = false;
-      this.signUpDiagVisible = false;
+    },
+    handleCloseOfPayment() {
+      this.$refs.paymentForm.resetFields();
+      this.paymentDialogVisible = false;
+    },
+    handleCloseQRCodeDialog() {
+      this.qrcodeDialogVisible = false;
     },
 
     // 选择页码的回调函数
@@ -447,6 +394,20 @@ export default {
 <style lang="less" scoped>
 .course-selection {
   padding: 20px;
+}
+.centered-radio-group {
+  display: flex;
+  justify-content: center;
+}
+.qrcode-image {
+  max-width: 400px; /* 控制图片最大宽度 */
+  height: auto; /* 自动计算高度 */
+  display: block; /* 块级显示，以便使用 margin 居中 */
+  margin: 0 auto; /* 居中 */
+}
+.qrcode-container {
+  text-align: center;
+  margin-top: 20px;
 }
 
 .manage {

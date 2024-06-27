@@ -1,5 +1,4 @@
 import Mock from 'mockjs'
-import { courseStatus } from '../../utils/dataType'
 
 // get请求从config.url获取参数，post从config.body中获取参数
 function param2Obj (url) {
@@ -27,7 +26,9 @@ for (let i = 0; i < count; i++) {
         name: Mock.Random.ctitle(5, 10), // 课程名称
         teacher: Mock.Random.cname(), // 讲师
         executor: Mock.Random.cname(), // 执行人
-        status: courseStatus.UNSTART, // 课程状态
+        status: "未开始", // 课程状态
+        statusOfEva: i % 2 === 0 ? "已评价" : "未评价", // 评价状态
+        statusOfPay: i % 2 === 0 ? "已缴费" : "未缴费", // 支付状态
         cost: 2000,
         plan: '培训计划内容',
         teacherTitle: '',
@@ -35,9 +36,10 @@ for (let i = 0; i < count; i++) {
         teacherEmail: '',
         teacherPhone: '',
         trainingContent: '内容',
-        trainingTime: '时间',
+        trainingStartTime: '起始时间',
+        trainingEndTime: '结束时间',
         trainingLocation: '位置',
-        selected: false
+        selected: i % 2 === 0 ? false : true
     })
   )
 }

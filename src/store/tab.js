@@ -161,9 +161,23 @@ export default {
         {
           path: "/courseOfStu",
           name: "courseOfStu",
-          label: "课程管理",
+          label: "选课管理",
           icon: "video-play",
           url: "CourseOfStu.vue",
+        },
+        {
+          path: "/evaluation",
+          name: "evaluation",
+          label: "课程评价",
+          icon: "edit",
+          url: "Evaluation.vue",
+        },
+        {
+          path: "/payment",
+          name: "payment",
+          label: "课程缴费",
+          icon: "wallet",
+          url: "Payment.vue",
         },
       ],
       staff: [

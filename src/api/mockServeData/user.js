@@ -29,6 +29,7 @@ for (let i = 0; i < count; i++) {
       position: Mock.Random.pick(['软件工程师', '数据分析师', '质量保证工程师', '产品经理']),
       level: Mock.Random.pick(['萌新', '小成', '高手', '神']),
       email: Mock.Random.email(),
+      statusOfSign: i % 2 === 0 ? '已签到' : '未签到',
     })
   )
 }

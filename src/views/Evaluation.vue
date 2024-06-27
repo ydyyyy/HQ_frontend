@@ -102,101 +102,64 @@
       </el-form>
     </el-dialog>
 
-    <!-- 报名表单对话框 -->
-  <el-dialog
-    title="报名信息"
-    :visible.sync="signUpDiagVisible"
+    <!-- 评价表单对话框 -->
+    <el-dialog
+    title="课程评价"
+    :visible.sync="evaluationDialogVisible"
     width="50%"
-    :before-close="handleClose"
+    :before-close="handleCloseOfEvaluation"
   >
-    <!-- 学生信息 -->
     <el-form
-      ref="form"
-      :rules="signUpRules"
+      ref="evaluationForm"
+      :rules="evaluationRules"
       :inline="false"
-      :model="signUpForm"
+      :model="evaluationForm"
       label-width="120px"
     >
-      <el-form-item label="学生姓名" prop="name" class="full-width">
-        <el-input
-          placeholder="请填写姓名"
-          v-model="signUpForm.name"
-        ></el-input>
+      <!-- 课程名称 -->
+      <el-form-item label="课程名称" prop="courseName" class="full-width">
+        <el-input v-model="evaluationForm.courseName" disabled></el-input>
       </el-form-item>
-      <el-form-item label="性别" prop="gender" class="full-width">
-        <el-radio-group v-model="signUpForm.sex">
+
+      <!-- 学员信息 -->
+      <el-divider>学员信息</el-divider>
+      <el-form-item label="学员姓名" prop="studentName" class="full-width">
+        <el-input v-model="evaluationForm.studentName"></el-input>
+      </el-form-item>
+      <el-form-item label="性别" prop="sex" class="full-width">
+        <el-radio-group v-model="evaluationForm.sex">
           <el-radio label="男">男</el-radio>
           <el-radio label="女">女</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="年龄" prop="age" class="full-width">
-        <el-input
-          placeholder="请填写年龄"
-          v-model="signUpForm.age"
-          type="number"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="联系电话" prop="phone" class="full-width">
-        <el-input
-          placeholder="请填写联系电话"
-          v-model="signUpForm.phone"
-        ></el-input>
-      </el-form-item>
       <el-form-item label="电子邮箱" prop="email" class="full-width">
-        <el-input
-          placeholder="请填写电子邮箱"
-          v-model="signUpForm.email"
-        ></el-input>
+        <el-input v-model="evaluationForm.email"></el-input>
       </el-form-item>
-      <el-form-item label="所属公司名称" prop="company" class="full-width">
-        <el-input
-          placeholder="请填写公司名称"
-          v-model="signUpForm.company"
-        ></el-input>
+
+      <!-- 评价内容 -->
+      <el-divider>评价内容</el-divider>
+      <el-form-item label="讲师评价" prop="instructorFeedback" class="full-width">
+        <el-rate v-model="evaluationForm.instructorFeedback"></el-rate>
       </el-form-item>
-      <el-form-item label="工作岗位" prop="position" class="full-width">
-        <el-select v-model="signUpForm.position" placeholder="请选择工作岗位">
-          <el-option label="软件工程师" value="软件工程师"></el-option>
-          <el-option label="数据分析师" value="数据分析师"></el-option>
-          <el-option label="质量保证工程师" value="质量保证工程师"></el-option>
-          <el-option label="产品经理" value="产品经理"></el-option>
-        </el-select>
+      <el-form-item label="培训满意度" prop="trainingSatisfaction" class="full-width">
+        <el-rate v-model="evaluationForm.trainingSatisfaction"></el-rate>
       </el-form-item>
-      <el-form-item label="技术水平" prop="level" class="full-width">
-        <el-select v-model="signUpForm.level" placeholder="请选择技术水平">
-          <el-option label="萌新" value="萌新"></el-option>
-          <el-option label="小成" value="小成"></el-option>
-          <el-option label="高手" value="高手"></el-option>
-          <el-option label="神" value="神"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="申请理由" prop="reason" class="full-width">
+      <el-form-item label="意见和建议" prop="comments" class="full-width">
         <el-input
           type="textarea"
-          placeholder="请填写申请理由"
-          v-model="signUpForm.reason"
+          v-model="evaluationForm.comments"
           :rows="4"
         ></el-input>
       </el-form-item>
     </el-form>
 
     <span slot="footer" class="dialog-footer">
-      <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="signUpSubmit">提交</el-button>
+      <el-button @click="handleCloseOfEvaluation">取消</el-button>
+      <el-button type="primary" @click="submitEvaluation">提交</el-button>
     </span>
   </el-dialog>
 
     <div class="manage-header">
-      <el-form :inline="true" :model="filter">
-        <el-form-item label="筛选">
-          <el-switch
-            v-model="filter.showSelected"
-            active-text="已选课程"
-            inactive-text="未选课程"
-            @change="handleFilterChange"
-          ></el-switch>
-        </el-form-item>
-      </el-form>
       <el-form :inline="true" :model="userForm">
         <el-form-item>
           <el-input
@@ -217,7 +180,7 @@
 
     <!-- 表格内容 -->
     <div class="common-table">
-      <el-table :data="filteredCourses" style="width: 100%" height="90%" stripe>
+      <el-table :data="courses" style="width: 100%" height="90%" stripe>
         <el-table-column prop="name" label="课程名称"></el-table-column>
         <el-table-column prop="teacher" label="讲师"></el-table-column>
         <el-table-column
@@ -232,26 +195,18 @@
         <el-table-column prop="cost" label="培训费用(￥)"></el-table-column>
         <el-table-column prop="status" label="课程状态">
           <template slot-scope="scope">
-            <el-tag :type="getStatusType(scope.row.status)">
-              {{ scope.row.status }}
+            <el-tag :type="getStatusType(scope.row.statusOfEva)">
+              {{ scope.row.statusOfEva }}
             </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="300">
           <template slot-scope="scope">
             <el-button
-              v-if="!scope.row.selected"
               @click="selectCourse(scope.row)"
               type="primary"
               size="mini"
-              >报名</el-button
-            >
-            <el-button
-              v-else
-              @click="deselectCourse(scope.row)"
-              type="danger"
-              size="mini"
-              >退选</el-button
+              >评价</el-button
             >
             <el-button @click="viewCourse(scope.row)" type="success" size="mini"
               >查看</el-button
@@ -312,30 +267,25 @@ export default {
       },
 
       // 报名表单的显示与否
-      signUpDiagVisible: false,
+      evaluationDialogVisible: false,
       // 报名表单的属性
-      signUpForm: {
-        name: "",
-        sex: "",
-        age: "",
-        phone: "",
-        email: "",
-        company: "",
-        position: "",
-        level: "",
-        reason: "",
+      evaluationForm: {
+        courseName: 'Vue.js 前端开发培训', // 示例课程名称
+        studentName: '',
+        sex: '',
+        email: '',
+        instructorFeedback: 0,
+        trainingSatisfaction: 0,
+        comments: '',
       },
       // 报名表单的rules
-      signUpRules: {
-        name: [{ required: true, message: "请输入姓名" }],
-        sex: [{ required: true, message: "请选择性别" }],
-        age: [{ required: true, message: "请输入年龄" }],
-        phone: [{ required: true, message: "请输入联系电话" }],
-        email: [{ required: true, message: "请输入Email" }],
-        company: [{ required: true, message: "请输入公司名称" }],
-        position: [{ required: true, message: "请选择工作岗位" }],
-        level: [{ required: true, message: "请选择技术水平" }],
-        reason: [{ required: true, message: "请输入申请理由" }],
+      evaluationRules: {
+        studentName: [{ required: true, message: '请输入学员姓名', trigger: 'blur' }],
+        sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
+        email: [{ required: true, message: '请输入电子邮箱', trigger: 'blur' }],
+        instructorFeedback: [{ required: true, message: '请对讲师进行评价', trigger: 'change' }],
+        trainingSatisfaction: [{ required: true, message: '请对培训满意度进行评价', trigger: 'change' }],
+        comments: [{ required: true, message: '请输入意见和建议', trigger: 'blur' }],
       },
       total: 0, // 当前总条数
       pageData: {
@@ -351,29 +301,10 @@ export default {
       courses: [],
     };
   },
-  computed: {
-    filteredCourses() {
-      return this.courses.filter((course) => {
-        return this.filter.showSelected ? course.selected : !course.selected;
-      });
-    },
-  },
   methods: {
-    handleFilterChange() {
-      // TODO: 处理筛选条件变化的逻辑
-    },
-
-    // 课程报名
+    // 课程评价
     selectCourse(course) {
-      this.signUpDiagVisible = true;
-      // course.selected = true;
-    },
-
-    // 课程退选
-    deselectCourse(course) {
-      course.selected = false;
-      // TODO: 状态存到数据库中
-      this.$message(`退选成功: ${course.courseName}`);
+      this.evaluationDialogVisible = true;
     },
 
     // 查看课程信息
@@ -383,19 +314,28 @@ export default {
       this.form = this.courses.find((item) => item.id === course.id);
     },
 
-    // 提交报名
-    signUpSubmit() {
-      // TODO: 提交报名表单
-      this.signUpDiagVisible = false;
+    // 提交评价
+    submitEvaluation() {
+      this.$refs.evaluationForm.validate((valid) => {
+        if (valid) {
+          console.log(this.evaluationForm);
+          this.$message.success('评价提交成功！');
+        } else {
+          this.$message.error('请完成表单后再提交');
+          return false;
+        }
+        if (this.$refs.evaluationForm) {
+        this.$refs.evaluationForm.resetFields();
+       }
+       this.evaluationDialogVisible = false;
+      });
     },
 
     getStatusType(status) {
       switch (status) {
-        case "未开始":
-          return "info";
-        case "进行中":
+        case "已评价":
           return "success";
-        case "已结束":
+        case "未评价":
           return "danger";
         default:
           return "";
@@ -406,7 +346,10 @@ export default {
     handleClose() {
       this.$refs.form.resetFields();
       this.dialogVisible = false;
-      this.signUpDiagVisible = false;
+    },
+    handleCloseOfEvaluation() {
+      this.$refs.evaluationForm.resetFields();
+      this.evaluationDialogVisible = false;
     },
 
     // 选择页码的回调函数
