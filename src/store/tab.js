@@ -65,6 +65,13 @@ export default {
           icon: "postcard",
           url: "CourseAnn.vue",
         },
+        {
+          path: "/wholeSummary",
+          name: "wholeSummary",
+          label: "汇总报表",
+          icon: "ticket",
+          url: "WholeSummary.vue",
+        },
       ],
       executor: [
         // 执行者
@@ -116,6 +123,13 @@ export default {
           label: "课程公告",
           icon: "postcard",
           url: "CourseAnn.vue",
+        },
+        {
+          path: "/evaSummary",
+          name: "evaSummary",
+          label: "课程评价汇总",
+          icon: "tickets",
+          url: "EvaSummary.vue",
         },
       ],
       company: [
