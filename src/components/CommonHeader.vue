@@ -1,13 +1,8 @@
 <template>
   <div class="header-container">
     <div class="l-content">
-      <el-button
-        style="margin-right: 20px"
-        @click="handleMenu"
-        icon="el-icon-menu"
-        size="mini"
-      ></el-button>
-      <p class="text">{{activePath}}</p>
+      <el-button style="margin-right: 20px" @click="handleMenu" icon="el-icon-menu" size="mini"></el-button>
+      <p class="text">{{ activePath }}</p>
     </div>
     <div class="r-content">
       <el-dropdown @command="handleClick">
@@ -15,7 +10,7 @@
           <img class="user" src="../assets/logo.png" />
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item command="center">个人中心</el-dropdown-item>
           <el-dropdown-item command="cancel">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -24,10 +19,12 @@
 </template>
 <script>
 import Cookie from "js-cookie";
-import { mapState, mapActions} from 'vuex';
+import { mapState, mapActions } from 'vuex';
 export default {
   data() {
-    return {};
+    return {
+      tab: ''
+    };
   },
   methods: {
     handleMenu() {
@@ -36,22 +33,26 @@ export default {
     },
     ...mapActions(['setActivePath']),
     handleClick(command) {
-      if(command === 'cancel') {
-      //清除cookie中的token
-      Cookie.remove('token')
-      // 清除cookie中的menu
-      Cookie.remove('menu')
-      //跳转至登录页
-      this.$router.push('/login')
+      if (command === 'cancel') {
+        //清除cookie中的token
+        Cookie.remove('token')
+        // 清除cookie中的menu
+        Cookie.remove('menu')
+        this.$router.push('/login')
+      }
+      if (command === 'center') {
+        if (this.$route.path !== '/personalCenter')
+          this.$router.push('/personalCenter')
       }
     },
   },
   computed: {
     activePath() {
-      return this.$store.state.tab.activePath;
+      if (this.$route.path === '/personalCenter') return '个人中心'
+      else return this.$store.state.tab.activePath;
     },
     tags() {
-      return this.$store.state.tab.tabsList;  
+      return this.$store.state.tab.tabsList;
     }
   },
 };
@@ -64,25 +65,31 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+
   .text {
     color: #fff;
     font-size: 14px;
     margin-left: 10px;
   }
+
   .user {
     width: 40px;
     height: 40px;
   }
+
   .l-content {
     display: flex;
     align-items: center;
+
     /deep/.el-breadcrumb__item {
       .el-breadcrumb__inner {
         font-weight: normal;
+
         &.is-link {
           color: #666;
         }
       }
+
       &:last-child {
         .el-breadcrumb__inner {
           color: #fff;
