@@ -65,6 +65,13 @@ export default {
           icon: "postcard",
           url: "CourseAnn.vue",
         },
+        {
+          path: "/wholeSummary",
+          name: "wholeSummary",
+          label: "汇总报表",
+          icon: "data-analysis",
+          url: "WholeSummary.vue",
+        },
       ],
       executor: [
         // 执行者
@@ -116,6 +123,13 @@ export default {
           label: "课程公告",
           icon: "postcard",
           url: "CourseAnn.vue",
+        },
+        {
+          path: "/evaSummary",
+          name: "evaSummary",
+          label: "课程评价汇总",
+          icon: "data-analysis",
+          url: "EvaSummary.vue",
         },
       ],
       company: [
@@ -178,6 +192,13 @@ export default {
           label: "课程缴费",
           icon: "wallet",
           url: "Payment.vue",
+        },
+        {
+          path: "/personalCenter",
+          name: "personalCenter",
+          label: "课程公告",
+          icon: "postcard",
+          url: "PersonalCenter.vue",
         },
       ],
       staff: [
