@@ -38,7 +38,6 @@ export default {
         { title: "发布通知", description: "发布培训通知说明", icon: "🔔", color: "#ff69b4", link: "/courseInfo", menuId: "menu-courseInfo" },
         { title: "课程公告", description: "课程公告说明", icon: "📢", color: "#ffc800", link: "/courseAnn", menuId: "menu-courseAnn" },
         { title: "签到管理", description: "签到管理说明", icon: "📋", color: "#32cd32", link: "/signIn", menuId: "menu-signIn" },
-        { title: "培训调查", description: "培训调查说明", icon: "📊", color: "#ff69b4", link: "/courseSurvey", menuId: "menu-courseSurvey" },
         { title: "课程评价", description: "课程评价说明", icon: "⭐️", color: "#32cd32", link: "/evaluation", menuId: "menu-evaluation" },
         { title: "课程缴费", description: "课程缴费说明", icon: "💳", color: "#00c3ff", link: "/payment", menuId: "menu-payment" },
         { title: "课程评价汇总", description: "执行人汇总课程评价", icon: "📈", color: "#00c3ff", link: "/evaSummary", menuId: "menu-evaSummary" },

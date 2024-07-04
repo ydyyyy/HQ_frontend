@@ -154,7 +154,7 @@ export default {
   max-width: 800px;
   margin: -50px auto;
   padding: 30px;
-  background-color: #f0f9ff;
+  background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
