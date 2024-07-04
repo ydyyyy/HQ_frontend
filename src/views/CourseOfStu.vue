@@ -9,47 +9,47 @@
           <el-input v-model="form.name" disabled></el-input>
         </el-form-item>
         <el-form-item label="软件公司" prop="company" class="full-width">
-          <el-input v-model="form.company"></el-input>
+          <el-input v-model="form.company" disabled></el-input>
         </el-form-item>
         <el-form-item label="执行人" prop="executor" class="full-width">
-          <el-input v-model="form.executor"></el-input>
+          <el-input v-model="form.executor" disabled></el-input>
         </el-form-item>
         <el-form-item label="培训费用" prop="cost" class="full-width">
-          <el-input v-model="form.cost"></el-input>
+          <el-input v-model="form.cost" disabled></el-input>
         </el-form-item>
         <el-form-item label="培训计划" prop="plan" class="large-width">
-          <el-input type="textarea" :rows="8" style="width: 525px; height: 200px" v-model="form.plan"></el-input>
+          <el-input type="textarea" :rows="8" style="width: 525px; height: 200px" v-model="form.plan" disabled></el-input>
         </el-form-item>
 
         <!-- 讲师资料 -->
         <el-divider>讲师资料</el-divider>
         <el-form-item label="姓名" prop="instructorName" class="full-width">
-          <el-input v-model="form.teacher"></el-input>
+          <el-input v-model="form.teacher" disabled></el-input>
         </el-form-item>
         <el-form-item label="职称" prop="instructorTitle" class="full-width">
-          <el-input v-model="form.teacherTitle"></el-input>
+          <el-input v-model="form.teacherTitle" disabled></el-input>
         </el-form-item>
         <el-form-item label="擅长领域" prop="instructorField" class="full-width">
-          <el-input v-model="form.teacherField"></el-input>
+          <el-input v-model="form.teacherField" disabled></el-input>
         </el-form-item>
         <el-form-item label="Email" prop="instructorEmail" class="full-width">
-          <el-input v-model="form.teacherEmail"></el-input>
+          <el-input v-model="form.teacherEmail" disabled></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="instructorPhone" class="full-width">
-          <el-input v-model="form.teacherPhone"></el-input>
+          <el-input v-model="form.teacherPhone" disabled></el-input>
         </el-form-item>
         <el-form-item label="培训内容" prop="trainingContent" class="large-width">
           <el-input type="textarea" :rows="4" style="width: 525px; height: 100px"
-            v-model="form.trainingContent"></el-input>
+            v-model="form.trainingContent" disabled></el-input>
         </el-form-item>
         <el-form-item label="开始时间" prop="trainingStartTime" class="full-width">
-          <el-date-picker v-model="form.trainingStartTime" type="datetime" style="width: 525px"></el-date-picker>
+          <el-date-picker v-model="form.trainingStartTime" type="datetime" style="width: 525px" disabled></el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间" prop="trainingEndTime" class="full-width">
-          <el-date-picker v-model="form.trainingEndTime" type="datetime" style="width: 525px"></el-date-picker>
+          <el-date-picker v-model="form.trainingEndTime" type="datetime" style="width: 525px" disabled></el-date-picker>
         </el-form-item>
         <el-form-item label="培训地点" prop="trainingLocation" class="full-width">
-          <el-input v-model="form.trainingLocation"></el-input>
+          <el-input v-model="form.trainingLocation" disabled></el-input>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -109,8 +109,7 @@
     <div class="manage-header">
       <el-form :inline="true" :model="filter">
         <el-form-item label="筛选">
-          <el-switch v-model="filter.showSelected" active-text="已选课程" inactive-text="未选课程"
-            @change="handleFilterChange"></el-switch>
+          <el-switch v-model="filter.showSelected" active-text="已选课程" inactive-text="未选课程"></el-switch>
         </el-form-item>
       </el-form>
       <el-form :inline="true" :model="userForm">
@@ -247,10 +246,6 @@ export default {
     },
   },
   methods: {
-    handleFilterChange() {
-      // TODO: 处理筛选条件变化的逻辑
-    },
-
     // 课程报名
     selectCourse(course) {
       this.signUpDiagVisible = true;

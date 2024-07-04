@@ -240,7 +240,7 @@
           type: "warning",
         })
           .then(() => {
-            row.status = '已启动';
+            row.status = '进行中';
           })
           .catch(() => {
             this.$message({

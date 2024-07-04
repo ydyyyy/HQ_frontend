@@ -72,6 +72,13 @@ export default {
           icon: "data-analysis",
           url: "WholeSummary.vue",
         },
+        {
+          path: "/personalCenter",
+          name: "personalCenter",
+          label: "个人中心",
+          icon: "user-solid",
+          url: "PersonalCenter.vue",
+        }
       ],
       executor: [
         // 执行者
@@ -131,6 +138,13 @@ export default {
           icon: "data-analysis",
           url: "EvaSummary.vue",
         },
+        {
+          path: "/personalCenter",
+          name: "personalCenter",
+          label: "个人中心",
+          icon: "user-solid",
+          url: "PersonalCenter.vue",
+        }
       ],
       company: [
         // 软件公司
@@ -154,6 +168,13 @@ export default {
           label: "课程公告",
           icon: "postcard",
           url: "CourseAnn.vue",
+        },
+        {
+          path: "/personalCenter",
+          name: "personalCenter",
+          label: "个人中心",
+          icon: "user-solid",
+          url: "PersonalCenter.vue",
         }
       ],
       student: [
@@ -196,10 +217,10 @@ export default {
         {
           path: "/personalCenter",
           name: "personalCenter",
-          label: "课程公告",
-          icon: "postcard",
+          label: "个人中心",
+          icon: "user-solid",
           url: "PersonalCenter.vue",
-        },
+        }
       ],
       staff: [
         // 现场工作人员
@@ -224,6 +245,20 @@ export default {
           icon: "s-marketing",
           url: "CourseSurvey.vue",
         },
+        {
+          path: "/evaSummary",
+          name: "evaSummary",
+          label: "课程评价汇总",
+          icon: "data-analysis",
+          url: "EvaSummary.vue",
+        },
+        {
+          path: "/personalCenter",
+          name: "personalCenter",
+          label: "个人中心",
+          icon: "user-solid",
+          url: "PersonalCenter.vue",
+        }
       ],
     },
   },
