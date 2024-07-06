@@ -2,14 +2,11 @@
   <el-menu
     default-active="1-4-1"
     class="el-menu-vertical-demo"
-    @open="handleOpen"
-    @close="handleClose"
-    :collapse="isCollapse"
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <h3>{{ isCollapse ? "HQ" : "HQ技术培训管理系统" }}</h3>
+    <h3>{{ "HQ技术培训管理系统" }}</h3>
     <el-menu-item
       @click="clickMenu(item)"
       v-for="item in noChildren"
@@ -42,11 +39,15 @@
 <style lang="less" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 400px;
+  min-height: 100vh;
 }
 .el-menu {
   height: 100vh;
   border-right: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
   h3 {
     color: white;
     text-align: center;

@@ -107,7 +107,7 @@
         </el-form>
       </div>
       <div class="common-table">
-        <el-table :data="tableData" style="width: 100%" height="90%" stripe>
+        <el-table :data="tableData" style="width: 100%" height="740px" stripe>
           <el-table-column prop="id" label="课程ID"> </el-table-column>
           <el-table-column prop="name" label="课程名称"> </el-table-column>
           <el-table-column prop="teacher" label="讲师"> </el-table-column>

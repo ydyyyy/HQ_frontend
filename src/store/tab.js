@@ -65,13 +65,6 @@ export default {
           icon: "postcard",
           url: "CourseAnn.vue",
         },
-        {
-          path: "/wholeSummary",
-          name: "wholeSummary",
-          label: "汇总报表",
-          icon: "data-analysis",
-          url: "WholeSummary.vue",
-        },
       ],
       executor: [
         // 执行者
@@ -223,7 +216,7 @@ export default {
           label: "课程评价汇总",
           icon: "data-analysis",
           url: "EvaSummary.vue",
-        }
+        },
       ],
     },
   },

@@ -75,7 +75,7 @@
       </el-form>
     </div>
     <div class="common-table">
-      <el-table :data="tableData" style="width: 100%" height="90%" stripe>
+      <el-table :data="tableData" style="width: 100%" height="740px" stripe>
         <el-table-column prop="name" label="姓名"> </el-table-column>
         <el-table-column prop="sex" label="性别"> </el-table-column>
         <el-table-column prop="company" label="公司名称"> </el-table-column>

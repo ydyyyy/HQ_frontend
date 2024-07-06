@@ -106,7 +106,7 @@
         </el-form>
       </div>
       <div class="common-table">
-        <el-table :data="tableData" style="width: 100%" height="90%" stripe>
+        <el-table :data="tableData" style="width: 100%" height="740px" stripe>
           <el-table-column prop="id" label="课程ID"> </el-table-column>
           <el-table-column prop="name" label="课程名称"> </el-table-column>
           <el-table-column prop="teacher" label="讲师"> </el-table-column>
@@ -118,7 +118,7 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="control" label="操作">
+          <el-table-column prop="control" label="操作" width="280px">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.row)"
                 >编辑</el-button

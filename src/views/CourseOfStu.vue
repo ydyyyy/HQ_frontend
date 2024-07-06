@@ -127,7 +127,7 @@
 
     <!-- 表格内容 -->
     <div class="common-table">
-      <el-table :data="filteredCourses" style="width: 100%" height="90%" stripe>
+      <el-table :data="filteredCourses" style="width: 100%" height="740px" stripe>
         <el-table-column prop="name" label="课程名称"></el-table-column>
         <el-table-column prop="teacher" label="讲师"></el-table-column>
         <el-table-column prop="trainingStartTime" label="起始时间"></el-table-column>

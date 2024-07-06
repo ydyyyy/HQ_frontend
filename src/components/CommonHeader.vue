@@ -1,13 +1,23 @@
 <template>
   <div class="header-container">
     <div class="l-content">
-      <el-button style="margin-right: 20px" @click="handleMenu" icon="el-icon-menu" size="mini"></el-button>
+      <el-button
+        style="margin-right: 20px"
+        @click="handleMenu"
+        icon="el-icon-menu"
+        size="mini"
+      ></el-button>
       <p class="text">{{ activePath }}</p>
     </div>
     <div class="r-content">
       <el-dropdown @command="handleClick">
         <span class="el-dropdown-link">
-          <img class="user" src="../assets/logo.png" />
+          <img v-if="this.$store.state.tab.role === 'manager'" src="../assets/images/manager.jpeg"  class="user" />
+         <img v-else-if="this.$store.state.tab.role === 'student'" src="../assets/images/student.jpeg" class="user"/>
+          <img v-else-if="this.$store.state.tab.role === 'executor'" src="../assets/images/executor.jpeg" class="user"/>
+          <img v-else-if="this.$store.state.tab.role === 'staff'" src="../assets/images/staff.jpg" class="user"/>
+          <img v-else-if="this.$store.state.tab.role === 'company'" src="../assets/images/company.jpeg" class="user"/>
+          <img v-else src="../assets/logo.png" class="logo"/>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="center">个人中心</el-dropdown-item>
@@ -19,11 +29,11 @@
 </template>
 <script>
 import Cookie from "js-cookie";
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
-      tab: ''
+      tab: "",
     };
   },
   methods: {
@@ -31,29 +41,29 @@ export default {
       this.$store.commit("collapseMenu");
       console.log(this.activePath);
     },
-    ...mapActions(['setActivePath']),
+    ...mapActions(["setActivePath"]),
     handleClick(command) {
-      if (command === 'cancel') {
+      if (command === "cancel") {
         //清除cookie中的token
-        Cookie.remove('token')
+        Cookie.remove("token");
         // 清除cookie中的menu
-        Cookie.remove('menu')
-        this.$router.push('/login')
+        Cookie.remove("menu");
+        this.$router.push("/login");
       }
-      if (command === 'center') {
-        if (this.$route.path !== '/personalCenter')
-          this.$router.push('/personalCenter')
+      if (command === "center") {
+        if (this.$route.path !== "/personalCenter")
+          this.$router.push("/personalCenter");
       }
     },
   },
   computed: {
     activePath() {
-      if (this.$route.path === '/personalCenter') return '个人中心'
+      if (this.$route.path === "/personalCenter") return "个人中心";
       else return this.$store.state.tab.activePath;
     },
     tags() {
       return this.$store.state.tab.tabsList;
-    }
+    },
   },
 };
 </script>
@@ -72,10 +82,22 @@ export default {
     margin-left: 10px;
   }
 
-  .user {
-    width: 40px;
-    height: 40px;
+  .logo {
+  width: 40px; /* 图像宽度 */
+  height: 40px; /* 图像高度 */
   }
+  .user {
+  width: 75px; /* 图像宽度 */
+  height: 43px; /* 图像高度 */
+  border: 5px solid #ccc; /* 添加边框 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+  border-radius: 15px; /* 圆角效果 */
+  object-fit: cover; /* 保持图像的宽高比 */
+  transition: transform 0.3s; /* 添加过渡效果 */
+  }
+  .user:hover {
+  transform: scale(1.05); /* 鼠标悬停时放大 */
+}
 
   .l-content {
     display: flex;

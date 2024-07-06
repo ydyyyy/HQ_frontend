@@ -57,7 +57,7 @@
         </el-form>
       </div>
       <div class="common-table">
-        <el-table :data="tableData" style="width: 100%" height="90%" stripe>
+        <el-table :data="tableData" style="width: 100%" height="740px" stripe>
           <el-table-column prop="name" label="姓名"> </el-table-column>
           <el-table-column prop="title" label="职称"> </el-table-column>
           <el-table-column prop="major" label="擅长领域"> </el-table-column>

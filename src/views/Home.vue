@@ -41,7 +41,6 @@ export default {
         { title: "课程评价", description: "课程评价说明", icon: "⭐️", color: "#32cd32", link: "/evaluation", menuId: "menu-evaluation" },
         { title: "课程缴费", description: "课程缴费说明", icon: "💳", color: "#00c3ff", link: "/payment", menuId: "menu-payment" },
         { title: "课程评价汇总", description: "执行人汇总课程评价", icon: "📈", color: "#00c3ff", link: "/evaSummary", menuId: "menu-evaSummary" },
-        { title: "汇总报表", description: "经理查看汇总报表", icon: "📈", color: "#00c3ff", link: "/wholeSummary", menuId: "menu-wholeSummary" },
         { title: "个人中心", description: "个人中心说明", icon: "👤", color: "#ffa500", link: "/personalCenter", menuId: "menu-personalCenter" },
       ],
       cards: []

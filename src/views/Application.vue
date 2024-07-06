@@ -1,6 +1,6 @@
 <template>
     <div>
-      <el-table :data="applications" style="width: 100%">
+      <el-table :data="applications" style="width: 100%" >
         <el-table-column prop="id" label="申请ID" width="180" />
         <el-table-column prop="name" label="申请人姓名" />
         <el-table-column prop="company" label="公司" />
